@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-EC2_HOSTNAME=`cat ./.ec2_hostname`
+EC2_HOSTNAME=$(cat ./.ec2_hostname)
 if [ -z $EC2_HOSTNAME ]; then
   echo ""
   echo "No hostname detected in '.ec2_hostname' :( Exiting!"

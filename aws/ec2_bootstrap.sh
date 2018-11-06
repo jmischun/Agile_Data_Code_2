@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Update and install critical packages
-LOG_FILE="/tmp/ec2_bootstrap.sh.log"
+LOG_FILE="/var/log/ec2_bootstrap.sh.log"
 echo "Logging to \"$LOG_FILE\" ..."
 
 echo "Installing essential packages via apt-get in non-interactive mode ..." | tee -a $LOG_FILE
@@ -36,13 +36,6 @@ cd Agile_Data_Code_2
 
 Note: to run the web applications and view them at http://localhost:5000 you will now need to run the ec2_create_tunnel.sh script from your local machine.
 
-If you have problems, please file an issue at https://github.com/rjurney/Agile_Data_Code_2/issues
-------------------------------------------------------------------------------------------------------------------------
-
-For help building 'big data' applications like this one, or for training regarding same, contact Russell Jurney <rjurney@datasyndrome.com> or find more information at http://datasyndrome.com
-
-Enjoy! Russell Jurney @rjurney <russell.jurney@gmail.com> http://linkedin.com/in/russelljurney
-
 END_HELLO
 
 cat <<EOF | sudo tee /etc/update-motd.d/99-agile-data-science
@@ -56,14 +49,12 @@ sudo update-motd
 #
 # Install Java and setup ENV
 #
-echo "Installing and configuring Java 8 from Oracle ..." | tee -a $LOG_FILE
-sudo add-apt-repository -y ppa:webupd8team/java
-sudo apt-get update
-echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-sudo apt-get install -y oracle-java8-installer oracle-java8-set-default
 
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" | sudo tee -a /home/ubuntu/.bash_profile
+# java-8-openjdk-amd64
+echo "Installing and configuring Jave 8 Open JDK"
+sudo apt-get install -y openjdk-8-jdk
+echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" | sudo tee -a /home/ubuntu/.bash_profile
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 #
 # Install Miniconda
@@ -131,10 +122,10 @@ sudo chgrp -R ubuntu /home/ubuntu/hadoop
 #
 echo "" | tee -a $LOG_FILE
 echo "Downloading and installing Spark 2.2.1 ..." | tee -a $LOG_FILE
-curl -Lko /tmp/spark-2.2.1-bin-without-hadoop.tgz http://apache.mirrors.lucidnetworks.net/spark/spark-2.2.1/spark-2.2.1-bin-hadoop2.7.tgz
+curl -Lko /tmp/spark-2.3.2-bin-hadoop2.7.tgz http://apache.mirrors.pair.com/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz
 mkdir -p /home/ubuntu/spark
 cd /home/ubuntu
-tar -xvf /tmp/spark-2.2.1-bin-without-hadoop.tgz -C spark --strip-components=1
+tar -xvzf /tmp/spark-2.3.2-bin-hadoop2.7.tgz -C spark --strip-components=1
 
 echo "Configuring Spark 2.2.1 ..." | tee -a $LOG_FILE
 echo "" >> /home/ubuntu/.bash_profile

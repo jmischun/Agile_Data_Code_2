@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LOG_FILE="/tmp/ec2.sh.log"
+LOG_FILE="$HOME/ec2.sh.log"
 echo "Logging operations to '$LOG_FILE' ..."
 
 echo "" | tee -a $LOG_FILE # first echo replaces previous log output, other calls append
@@ -23,7 +23,7 @@ fi
 # Can't proceed if jq still not detected
 if [ -z `which jq` ]; then
   echo "'jq' was still not detected. We use 'jq' to create the 'agile_data_science' key and to get the external hostname of the ec2 instance we create." | tee -a $LOG_FILE
-  echo "Please install jq, or open the script './ec2.sh' and use manually, creating the file './agile_data_science.pem' manually." | tee -a $LOG_FILE
+  echo "Please install jq, or open the script './ec2.sh' and use manually, creating the file '$HOME/.ssh/agile_data_science.pem' manually." | tee -a $LOG_FILE
   echo "'jq' install instructions are available at https://github.com/stedolan/jq/wiki/Installation" | tee -a $LOG_FILE
   echo "" | tee -a $LOG_FILE
   echo "Goodbye!" | tee -a $LOG_FILE
@@ -57,20 +57,20 @@ else
 fi
 
 echo ""
-echo "Testing for existence of keypair 'agile_data_science' and key 'agile_data_science.pem' ..." | tee -a $LOG_FILE
+echo "Testing for existence of keypair 'agile_data_science' and key '$HOME/.ssh/agile_data_science.pem' ..." | tee -a $LOG_FILE
 KEY_PAIR_RESULTS=`aws ec2 describe-key-pairs | jq '.KeyPairs[] | select(.KeyName == "agile_data_science") | length'`
 
 # If the key doesn't exist in EC2 or the file doesn't exist, create a new key called agile_data_science
-if [ \( -n "$KEY_PAIR_RESULTS" \) -a \( -f "./agile_data_science.pem" \) ]
+if [ \( -n "$KEY_PAIR_RESULTS" \) -a \( -f "$HOME/.ssh/agile_data_science.pem" \) ]
 then
   echo "Existing key pair 'agile_data_science' detected, will not recreate ..." | tee -a $LOG_FILE
 else
   echo "Key pair 'agile_data_science' not found ..." | tee -a $LOG_FILE
   echo "Generating keypair called 'agile_data_science' ..." | tee -a $LOG_FILE
 
-  aws ec2 create-key-pair --key-name agile_data_science|jq .KeyMaterial|sed -e 's/^"//' -e 's/"$//'| awk '{gsub(/\\n/,"\n")}1' > ./agile_data_science.pem
+  aws ec2 create-key-pair --key-name agile_data_science|jq .KeyMaterial|sed -e 's/^"//' -e 's/"$//'| awk '{gsub(/\\n/,"\n")}1' > $HOME/.ssh/agile_data_science.pem
   echo "Changing permissions of 'agile_data_science.pem' to 0600 ..." | tee -a $LOG_FILE
-  chmod 0600 ./agile_data_science.pem
+  chmod 0600 $HOME/.ssh/agile_data_science.pem
 fi
 
 echo "" | tee -a $LOG_FILE
@@ -103,7 +103,7 @@ case $DEFAULT_REGION in
   ;;
   ap-northeast-2) UBUNTU_IMAGE_ID=ami-5771d239
   ;;
-  us-west-2) UBUNTU_IMAGE_ID=ami-70873908
+  us-west-2) UBUNTU_IMAGE_ID=ami-0bbe6b35405ecebdb
   ;;
   us-east-2) UBUNTU_IMAGE_ID=ami-6a5f6a0f
   ;;
@@ -158,7 +158,7 @@ echo "After a few minutes (for it to initialize), you may ssh to this machine vi
 # Make the ssh instructions red
 RED='\033[0;31m'
 NC='\033[0m' # No Color
-echo -e "${RED}ssh -i ./agile_data_science.pem ubuntu@$INSTANCE_PUBLIC_HOSTNAME${NC}" | tee -a $LOG_FILE
+echo -e "${RED}ssh -i $HOME/.ssh/agile_data_science.pem ubuntu@$INSTANCE_PUBLIC_HOSTNAME${NC}" | tee -a $LOG_FILE
 echo "Note: only your IP of '$EXTERNAL_IP' is authorized to connect to this machine." | tee -a $LOG_FILE
 echo "" | tee -a $LOG_FILE
 echo "NOTE: IT WILL TAKE SEVERAL MINUTES FOR THIS MACHINE TO INITIALIZE. PLEASE WAIT FIVE MINUTES BEFORE LOGGING IN." | tee -a $LOG_FILE

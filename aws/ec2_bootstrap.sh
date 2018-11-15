@@ -83,6 +83,7 @@ echo "export PROJECT_HOME=/home/ubuntu/Agile_Data_Code_2" | sudo tee -a /home/ub
 conda install -y python
 conda install -y iso8601 numpy scipy scikit-learn matplotlib ipython jupyter
 pip install -r requirements.txt
+# receiving 'Command "python setup.py egg_info" failed error' from line above
 sudo chown -R ubuntu /home/ubuntu/Agile_Data_Code_2
 sudo chgrp -R ubuntu /home/ubuntu/Agile_Data_Code_2
 pip install --upgrade pip

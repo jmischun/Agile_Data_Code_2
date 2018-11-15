@@ -47,7 +47,7 @@ sudo update-motd
 echo "Installing and configuring OpenJKD 8 ..." | tee -a $LOG_FILE
 sudo add-apt-repository -y ppa:openjdk-r/ppa
 sudo apt-get update
-sudo apt-get install openjdk-8-jdk
+sudo apt-get install -y openjdk-8-jdk
 echo '# Java environment setup' | sudo tee -a /home/ubuntu/.bash_profile
 echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" | sudo tee -a /home/ubuntu/.bash_profile
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64

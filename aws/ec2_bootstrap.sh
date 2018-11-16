@@ -130,7 +130,7 @@ sudo chgrp -R ubuntu /home/ubuntu/hadoop
 #
 echo "" | tee -a $LOG_FILE
 echo "Downloading and installing Spark 2.3.2 ..." | tee -a $LOG_FILE
-curl -Lko /tmp/spark-2.3.2-bin-hadoop2.7.tgz http://apache.mirrors.hoobly.com/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz
+curl -Lko /tmp/spark-2.3.2-bin-hadoop2.7.tgz http://apache.cs.utah.edu/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz
 mkdir -p /home/ubuntu/spark
 cd /home/ubuntu
 tar -xvzf /tmp/spark-2.3.2-bin-hadoop2.7.tgz -C spark --strip-components=1

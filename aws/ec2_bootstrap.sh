@@ -99,7 +99,7 @@ curl -Lko /home/ubuntu/Agile_Data_Code_2/lib/commons-httpclient-3.1.jar http://c
 #
 echo "" | tee -a $LOG_FILE
 echo "Downloading and installing Hadoop 3.1.1 ..." | tee -a $LOG_FILE
-curl -Lko /tmp/hadoop-3.1.1.tar.gz http://mirror.olnevhost.net/pub/apache/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz
+curl -Lko /tmp/hadoop-3.1.1.tar.gz http://www.gtlib.gatech.edu/pub/apache/hadoop/common/hadoop-3.1.1/hadoop-3.1.1-src.tar.gz
 mkdir -p /home/ubuntu/hadoop
 cd /home/ubuntu/
 tar -xvf /tmp/hadoop-3.1.1.tar.gz -C hadoop --strip-components=1

@@ -164,15 +164,15 @@ echo "Giving spark to user ubuntu ..." | tee -a $LOG_FILE
 sudo chown -R ubuntu /home/ubuntu/spark
 sudo chgrp -R ubuntu /home/ubuntu/spark
 
-# #
-# # Install MongoDB and dependencies
-# #
-# echo "" | tee -a $LOG_FILE
-# echo "Installing MongoDB via apt-get ..." | tee -a $LOG_FILE
-# sudo apt-get install -y mongodb
-# sudo mkdir -p /data/db
-# sudo chown -R mongodb /data/db
-# sudo chgrp -R mongodb /data/db
+#
+# Install MongoDB and dependencies
+#
+echo "" | tee -a $LOG_FILE
+echo "Installing MongoDB via apt-get ..." | tee -a $LOG_FILE
+sudo apt-get install -y mongodb
+sudo mkdir -p /data/db
+sudo chown -R mongodb /data/db
+sudo chgrp -R mongodb /data/db
 
 # # run MongoDB as daemon
 # echo "Running MongoDB as a daemon ..." | tee -a $LOG_FILE

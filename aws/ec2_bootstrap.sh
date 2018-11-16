@@ -94,75 +94,75 @@ cd /home/ubuntu
 # Install commons-httpclient
 curl -Lko /home/ubuntu/Agile_Data_Code_2/lib/commons-httpclient-3.1.jar http://central.maven.org/maven2/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar
 
-# #
-# # Install Hadoop
-# #
-# echo "" | tee -a $LOG_FILE
-# echo "Downloading and installing Hadoop 3.1.1 ..." | tee -a $LOG_FILE
-# curl -Lko /tmp/hadoop-3.1.1.tar.gz http://mirror.olnevhost.net/pub/apache/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz
-# mkdir -p /home/ubuntu/hadoop
-# cd /home/ubuntu/
-# tar -xvf /tmp/hadoop-3.1.1.tar.gz -C hadoop --strip-components=1
+#
+# Install Hadoop
+#
+echo "" | tee -a $LOG_FILE
+echo "Downloading and installing Hadoop 3.1.1 ..." | tee -a $LOG_FILE
+curl -Lko /tmp/hadoop-3.1.1.tar.gz http://mirror.olnevhost.net/pub/apache/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz
+mkdir -p /home/ubuntu/hadoop
+cd /home/ubuntu/
+tar -xvf /tmp/hadoop-3.1.1.tar.gz -C hadoop --strip-components=1
 
-# echo "Configuring Hadoop 3.1.1 ..." | tee -a $LOG_FILE
-# echo "" | sudo tee -a /home/ubuntu/.bash_profile
-# echo '# Hadoop environment setup' | sudo tee -a /home/ubuntu/.bash_profile
-# export HADOOP_HOME=/home/ubuntu/hadoop
-# echo 'export HADOOP_HOME=/home/ubuntu/hadoop' | sudo tee -a /home/ubuntu/.bash_profile
-# export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
-# echo 'export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native' | sudo tee -a /home/ubuntu/.bash_profile
-# export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
-# echo 'export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"' | sudo tee -a /home/ubuntu/.bash_profile
-# export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-# echo 'PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin' | sudo tee -a /home/ubuntu/.bash_profile
-# export HADOOP_CLASSPATH=$(hadoop classpath)
-# echo 'export HADOOP_CLASSPATH=$(hadoop classpath)' | sudo tee -a /home/ubuntu/.bash_profile
-# export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
-# echo 'export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/' | sudo tee -a /home/ubuntu/.bash_profile
+echo "Configuring Hadoop 3.1.1 ..." | tee -a $LOG_FILE
+echo "" | sudo tee -a /home/ubuntu/.bash_profile
+echo '# Hadoop environment setup' | sudo tee -a /home/ubuntu/.bash_profile
+export HADOOP_HOME=/home/ubuntu/hadoop
+echo 'export HADOOP_HOME=/home/ubuntu/hadoop' | sudo tee -a /home/ubuntu/.bash_profile
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+echo 'export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native' | sudo tee -a /home/ubuntu/.bash_profile
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
+echo 'export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"' | sudo tee -a /home/ubuntu/.bash_profile
+export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+echo 'PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin' | sudo tee -a /home/ubuntu/.bash_profile
+export HADOOP_CLASSPATH=$(hadoop classpath)
+echo 'export HADOOP_CLASSPATH=$(hadoop classpath)' | sudo tee -a /home/ubuntu/.bash_profile
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
+echo 'export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/' | sudo tee -a /home/ubuntu/.bash_profile
 
-# # Give to ubuntu
-# echo "Giving hadoop to user ubuntu ..." | tee -a $LOG_FILE
-# sudo chown -R ubuntu /home/ubuntu/hadoop
-# sudo chgrp -R ubuntu /home/ubuntu/hadoop
+# Give to ubuntu
+echo "Giving hadoop to user ubuntu ..." | tee -a $LOG_FILE
+sudo chown -R ubuntu /home/ubuntu/hadoop
+sudo chgrp -R ubuntu /home/ubuntu/hadoop
 
-# #
-# # Install Spark
-# #
-# echo "" | tee -a $LOG_FILE
-# echo "Downloading and installing Spark 2.3.2 ..." | tee -a $LOG_FILE
-# curl -Lko /tmp/spark-2.3.2-bin-hadoop2.7.tgz http://apache.mirrors.hoobly.com/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz
-# mkdir -p /home/ubuntu/spark
-# cd /home/ubuntu
-# tar -xvzf /tmp/spark-2.3.2-bin-hadoop2.7.tgz -C spark --strip-components=1
+#
+# Install Spark
+#
+echo "" | tee -a $LOG_FILE
+echo "Downloading and installing Spark 2.3.2 ..." | tee -a $LOG_FILE
+curl -Lko /tmp/spark-2.3.2-bin-hadoop2.7.tgz http://apache.mirrors.hoobly.com/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz
+mkdir -p /home/ubuntu/spark
+cd /home/ubuntu
+tar -xvzf /tmp/spark-2.3.2-bin-hadoop2.7.tgz -C spark --strip-components=1
 
-# echo "Configuring Spark 2.3.2 ..." | tee -a $LOG_FILE
-# echo "" | sudo tee -a /home/ubuntu/.bash_profile
-# echo "# Spark environment setup" | sudo tee -a /home/ubuntu/.bash_profile
-# export SPARK_HOME=/home/ubuntu/spark
-# echo 'export SPARK_HOME=/home/ubuntu/spark' | sudo tee -a /home/ubuntu/.bash_profile
-# export SPARK_DIST_CLASSPATH=`$HADOOP_HOME/bin/hadoop classpath`
-# echo 'export SPARK_DIST_CLASSPATH=`$HADOOP_HOME/bin/hadoop classpath`' | sudo tee -a /home/ubuntu/.bash_profile
-# export PATH=$PATH:$SPARK_HOME/bin
-# echo 'export PATH=$PATH:$SPARK_HOME/bin' | sudo tee -a /home/ubuntu/.bash_profile
+echo "Configuring Spark 2.3.2 ..." | tee -a $LOG_FILE
+echo "" | sudo tee -a /home/ubuntu/.bash_profile
+echo "# Spark environment setup" | sudo tee -a /home/ubuntu/.bash_profile
+export SPARK_HOME=/home/ubuntu/spark
+echo 'export SPARK_HOME=/home/ubuntu/spark' | sudo tee -a /home/ubuntu/.bash_profile
+export SPARK_DIST_CLASSPATH=`$HADOOP_HOME/bin/hadoop classpath`
+echo 'export SPARK_DIST_CLASSPATH=`$HADOOP_HOME/bin/hadoop classpath`' | sudo tee -a /home/ubuntu/.bash_profile
+export PATH=$PATH:$SPARK_HOME/bin
+echo 'export PATH=$PATH:$SPARK_HOME/bin' | sudo tee -a /home/ubuntu/.bash_profile
 
-# # Have to set spark.io.compression.codec in Spark local mode
-# cp /home/ubuntu/spark/conf/spark-defaults.conf.template /home/ubuntu/spark/conf/spark-defaults.conf
-# echo 'spark.io.compression.codec org.apache.spark.io.SnappyCompressionCodec' | sudo tee -a /home/ubuntu/spark/conf/spark-defaults.conf
+# Have to set spark.io.compression.codec in Spark local mode
+cp /home/ubuntu/spark/conf/spark-defaults.conf.template /home/ubuntu/spark/conf/spark-defaults.conf
+echo 'spark.io.compression.codec org.apache.spark.io.SnappyCompressionCodec' | sudo tee -a /home/ubuntu/spark/conf/spark-defaults.conf
 
-# # Give Spark 25GB of RAM, use Python3
-# echo "spark.driver.memory 50g" | sudo tee -a $SPARK_HOME/conf/spark-defaults.conf
-# echo "spark.executor.cores 12" | sudo tee -a $SPARK_HOME/conf/spark-defaults.conf
-# echo "PYSPARK_PYTHON=python" | sudo tee -a $SPARK_HOME/conf/spark-env.sh
-# echo "PYSPARK_DRIVER_PYTHON=ipython" | sudo tee -a $SPARK_HOME/conf/spark-env.sh
+# Give Spark 25GB of RAM, use Python3
+echo "spark.driver.memory 50g" | sudo tee -a $SPARK_HOME/conf/spark-defaults.conf
+echo "spark.executor.cores 12" | sudo tee -a $SPARK_HOME/conf/spark-defaults.conf
+echo "PYSPARK_PYTHON=python" | sudo tee -a $SPARK_HOME/conf/spark-env.sh
+echo "PYSPARK_DRIVER_PYTHON=ipython" | sudo tee -a $SPARK_HOME/conf/spark-env.sh
 
-# # Setup log4j config to reduce logging output
-# cp $SPARK_HOME/conf/log4j.properties.template $SPARK_HOME/conf/log4j.properties
-# sed -i 's/INFO/ERROR/g' $SPARK_HOME/conf/log4j.properties
+# Setup log4j config to reduce logging output
+cp $SPARK_HOME/conf/log4j.properties.template $SPARK_HOME/conf/log4j.properties
+sed -i 's/INFO/ERROR/g' $SPARK_HOME/conf/log4j.properties
 
-# # Give to ubuntu
-# echo "Giving spark to user ubuntu ..." | tee -a $LOG_FILE
-# sudo chown -R ubuntu /home/ubuntu/spark
-# sudo chgrp -R ubuntu /home/ubuntu/spark
+# Give to ubuntu
+echo "Giving spark to user ubuntu ..." | tee -a $LOG_FILE
+sudo chown -R ubuntu /home/ubuntu/spark
+sudo chgrp -R ubuntu /home/ubuntu/spark
 
 # #
 # # Install MongoDB and dependencies

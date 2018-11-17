@@ -174,44 +174,44 @@ sudo mkdir -p /data/db
 sudo chown -R mongodb /data/db
 sudo chgrp -R mongodb /data/db
 
-# # run MongoDB as daemon
-# echo "Running MongoDB as a daemon ..." | tee -a $LOG_FILE
-# sudo systemctl start mongodb
+# run MongoDB as daemon
+echo "Running MongoDB as a daemon ..." | tee -a $LOG_FILE
+sudo systemctl start mongodb
 
-# # Get the MongoDB Java Driver
-# echo "Fetching the MongoDB Java driver ..." | tee -a $LOG_FILE
-# curl -Lko /home/ubuntu/Agile_Data_Code_2/lib/mongo-java-driver-3.9.0.jar http://central.maven.org/maven2/org/mongodb/mongo-java-driver/3.9.0/mongo-java-driver-3.9.0.jar
+# Get the MongoDB Java Driver
+echo "Fetching the MongoDB Java driver ..." | tee -a $LOG_FILE
+curl -Lko /home/ubuntu/Agile_Data_Code_2/lib/mongo-java-driver-3.9.0.jar http://central.maven.org/maven2/org/mongodb/mongo-java-driver/3.9.0/mongo-java-driver-3.9.0.jar
 
-# # Install the mongo-hadoop project in the mongo-hadoop directory in the root of our project.
-# echo "" | tee -a $LOG_FILE
-# echo "Downloading and installing the mongo-hadoop project version 2.0.2 ..." | tee -a $LOG_FILE
-# curl -Lko /tmp/mongo-hadoop-r2.0.2.tar.gz https://github.com/mongodb/mongo-hadoop/archive/r2.0.2.tar.gz
-# mkdir /home/ubuntu/mongo-hadoop
-# cd /home/ubuntu
-# tar -xvzf /tmp/mongo-hadoop-r2.0.2.tar.gz -C mongo-hadoop --strip-components=1
-# rm -rf /tmp/mongo-hadoop-r2.0.2.tar.gz
+# Install the mongo-hadoop project in the mongo-hadoop directory in the root of our project.
+echo "" | tee -a $LOG_FILE
+echo "Downloading and installing the mongo-hadoop project version 2.0.2 ..." | tee -a $LOG_FILE
+curl -Lko /tmp/mongo-hadoop-r2.0.2.tar.gz https://github.com/mongodb/mongo-hadoop/archive/r2.0.2.tar.gz
+mkdir /home/ubuntu/mongo-hadoop
+cd /home/ubuntu
+tar -xvzf /tmp/mongo-hadoop-r2.0.2.tar.gz -C mongo-hadoop --strip-components=1
+rm -rf /tmp/mongo-hadoop-r2.0.2.tar.gz
 
-# # Now build the mongo-hadoop-spark jars
-# echo "Building mongo-hadoop-spark jars ..." | tee -a $LOG_FILE
-# cd /home/ubuntu/mongo-hadoop
-# ./gradlew jar
-# cp /home/ubuntu/mongo-hadoop/spark/build/libs/mongo-hadoop-spark-*.jar /home/ubuntu/Agile_Data_Code_2/lib/
-# cp /home/ubuntu/mongo-hadoop/build/libs/mongo-hadoop-*.jar /home/ubuntu/Agile_Data_Code_2/lib/
-# cd /home/ubuntu
+# Now build the mongo-hadoop-spark jars
+echo "Building mongo-hadoop-spark jars ..." | tee -a $LOG_FILE
+cd /home/ubuntu/mongo-hadoop
+./gradlew jar
+cp /home/ubuntu/mongo-hadoop/spark/build/libs/mongo-hadoop-spark-*.jar /home/ubuntu/Agile_Data_Code_2/lib/
+cp /home/ubuntu/mongo-hadoop/build/libs/mongo-hadoop-*.jar /home/ubuntu/Agile_Data_Code_2/lib/
+cd /home/ubuntu
 
-# # Now build the pymongo_spark package
-# echo "Building the pymongo_spark package ..." | tee -a $LOG_FILE
-# cd /home/ubuntu/mongo-hadoop/spark/src/main/python
-# python setup.py install
-# cp /home/ubuntu/mongo-hadoop/spark/src/main/python/pymongo_spark.py /home/ubuntu/Agile_Data_Code_2/lib/
-# export PYTHONPATH=$PYTHONPATH:$PROJECT_HOME/lib
-# echo "" | sudo tee -a /home/ubuntu/.bash_profile
-# echo '# PyMongo_Spark environment setup' | sudo tee -a /home/ubuntu/.bash_profile
-# echo 'export PYTHONPATH=$PYTHONPATH:$PROJECT_HOME/lib' | sudo tee -a /home/ubuntu/.bash_profile
-# cd /home/ubuntu
+# Now build the pymongo_spark package
+echo "Building the pymongo_spark package ..." | tee -a $LOG_FILE
+cd /home/ubuntu/mongo-hadoop/spark/src/main/python
+python setup.py install
+cp /home/ubuntu/mongo-hadoop/spark/src/main/python/pymongo_spark.py /home/ubuntu/Agile_Data_Code_2/lib/
+export PYTHONPATH=$PYTHONPATH:$PROJECT_HOME/lib
+echo "" | sudo tee -a /home/ubuntu/.bash_profile
+echo '# PyMongo_Spark environment setup' | sudo tee -a /home/ubuntu/.bash_profile
+echo 'export PYTHONPATH=$PYTHONPATH:$PROJECT_HOME/lib' | sudo tee -a /home/ubuntu/.bash_profile
+cd /home/ubuntu
 
-# echo "Nuking the source to mongo-hadoop ..." | tee -a $LOG_FILE
-# rm -rf /home/ubuntu/mongo-hadoop
+echo "Nuking the source to mongo-hadoop ..." | tee -a $LOG_FILE
+rm -rf /home/ubuntu/mongo-hadoop
 
 # #
 # # Install ElasticSearch in the elasticsearch directory in the root of our project, and the Elasticsearch for Hadoop package

@@ -80,9 +80,10 @@ export PROJECT_HOME=/home/ubuntu/Agile_Data_Code_2
 echo "" | sudo tee -a /home/ubuntu/.bash_profile
 echo '# Agile DS Project Home setup' | sudo tee -a /home/ubuntu/.bash_profile
 echo "export PROJECT_HOME=/home/ubuntu/Agile_Data_Code_2" | sudo tee -a /home/ubuntu/.bash_profile
-conda install -y python=3.6
+conda install -y python=3.5
 conda install -y iso8601 numpy scipy scikit-learn matplotlib ipython jupyter
-pip install --upgrade pip
+# pip install --upgrade pip
+pip install py4j
 pip install -r requirements.txt
 # receiving 'Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-install-nytfwkw8/airflow/' from line above
 # possible solution: run after airflow is installed
@@ -291,3 +292,30 @@ echo "Running Zookeeper as a daemon ..." | tee -a $LOG_FILE
 sudo -H -u ubuntu /home/ubuntu/kafka/bin/zookeeper-server-start.sh -daemon /home/ubuntu/kafka/config/zookeeper.properties
 echo "Running Kafka Server as a daemon ..." | tee -a $LOG_FILE
 sudo -H -u ubuntu /home/ubuntu/kafka/bin/kafka-server-start.sh -daemon /home/ubuntu/kafka/config/server.properties
+
+#
+# Install and setup Airflow
+#
+echo "" | tee -a $LOG_FILE
+echo "Installing Airflow via pip ..." | tee -a $LOG_FILE
+SLUGIFY_USES_TEXT_UNIDECODE=yes pip install --user apache-airflow[hive]
+mkdir /home/ubuntu/airflow
+mkdir /home/ubuntu/airflow/dags
+mkdir /home/ubuntu/airflow/logs
+mkdir /home/ubuntu/airflow/plugins
+
+echo "Giving airflow directory to user ubuntu ..." | tee -a $LOG_FILE
+sudo chown -R ubuntu /home/ubuntu/airflow
+sudo chgrp -R ubuntu /home/ubuntu/airflow
+
+airflow initdb
+airflow webserver -D &
+airflow scheduler -D &
+
+echo "Giving airflow directory to user ubuntu yet again ..." | tee -a $LOG_FILE
+sudo chown -R ubuntu /home/ubuntu/airflow
+sudo chgrp -R ubuntu /home/ubuntu/airflow
+
+echo "Adding chown airflow commands to /home/ubuntu/.bash_profile ..." | tee -a $LOG_FILE
+echo "sudo chown -R ubuntu /home/ubuntu/airflow" | sudo tee -a /home/ubuntu/.bash_profile
+echo "sudo chgrp -R ubuntu /home/ubuntu/airflow" | sudo tee -a /home/ubuntu/.bash_profile

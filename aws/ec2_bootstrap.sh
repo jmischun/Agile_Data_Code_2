@@ -14,10 +14,6 @@ sudo apt-get install -y update-motd
 cat > /home/ubuntu/agile_data_science.message << END_HELLO
 
 ------------------------------------------------------------------------------------------------------------------------
-Welcome to Agile Data Science 2.0!
-
-If the Agile_Data_Code_2 directory (and others for hadoop, spark, mongodb, elasticsearch, etc.) aren't present, please wait a few minutes for the install script to finish.
-
 Book reader, now you need to run the download scripts! To do so, run the following commands:
 
 cd Agile_Data_Code_2
@@ -27,8 +23,6 @@ Those working chapter 10, on the weather, will need to run the following command
 
 cd Agile_Data_Code_2
 ./download_weather.sh
-
-Note: to run the web applications and view them at http://localhost:5000 you will now need to run the ec2_create_tunnel.sh script from your local machine.
 ------------------------------------------------------------------------------------------------------------------------
 
 END_HELLO
@@ -356,16 +350,3 @@ sudo chown ubuntu ~/.bash_profile
 echo "Cleaning up after our selves ..." | tee -a $LOG_FILE
 sudo apt-get clean
 sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-
-# 
-# Appears to be an abandoned block of code from Russell Jurney. Next step is figuring out how to run the notebook in the background without tieing up the console
-#
-# Jupyter server setup
-# echo "" | tee -a $LOG_FILE
-# echo "Starting Jupyter notebook server ..." | tee -a $LOG_FILE
-# jupyter-notebook --generate-config
-# cp /home/ubuntu/Agile_Data_Code_2/jupyter_notebook_config.py /home/ubuntu/.jupyter/
-# cd /home/ubuntu/Agile_Data_Code_2
-# jupyter-notebook --ip=0.0.0.0 &
-# cd

@@ -319,3 +319,53 @@ sudo chgrp -R ubuntu /home/ubuntu/airflow
 echo "Adding chown airflow commands to /home/ubuntu/.bash_profile ..." | tee -a $LOG_FILE
 echo "sudo chown -R ubuntu /home/ubuntu/airflow" | sudo tee -a /home/ubuntu/.bash_profile
 echo "sudo chgrp -R ubuntu /home/ubuntu/airflow" | sudo tee -a /home/ubuntu/.bash_profile
+
+# Install Ant to build Cassandra
+sudo apt-get install -y ant
+
+# Install Cassandra - must build from source as the latest 3.11.1 build is broken...
+echo "" | tee -a $LOG_FILE
+echo "Installing Cassandra ..."
+git clone https://github.com/apache/cassandra
+cd cassandra
+git checkout cassandra-3.11
+ant
+bin/cassandra
+export PATH=$PATH:/home/ubuntu/cassandra/bin
+echo 'export PATH=$PATH:/home/ubuntu/cassandra/bin' | sudo tee -a /home/ubuntu/.bash_profile
+cd ..
+
+# Install and setup JanusGraph
+echo "" | tee -a $LOG_FILE
+echo "Installing JanusGraph ..." | tee -a $LOG_FILE
+cd /home/ubuntu
+mkdir janusgraph
+curl -Lko /tmp/janusgraph-0.2.0-hadoop2.zip \
+  https://github.com/JanusGraph/janusgraph/releases/download/v0.2.0/janusgraph-0.2.0-hadoop2.zip
+unzip -d . /tmp/janusgraph-0.2.0-hadoop2.zip
+mv janusgraph-0.2.0-hadoop2 janusgraph/
+rm /tmp/janusgraph-0.2.0-hadoop2.zip
+
+# make sure we own ~/.bash_profile after all the 'sudo tee'
+sudo chgrp ubuntu ~/.bash_profile
+sudo chown ubuntu ~/.bash_profile
+
+#
+# Cleanup
+#
+echo "Cleaning up after our selves ..." | tee -a $LOG_FILE
+sudo apt-get clean
+sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+# 
+# Appears to be an abandoned block of code from Russell Jurney. Next step is figuring out how to run the notebook in the background without tieing up the console
+#
+# Jupyter server setup
+# echo "" | tee -a $LOG_FILE
+# echo "Starting Jupyter notebook server ..." | tee -a $LOG_FILE
+# jupyter-notebook --generate-config
+# cp /home/ubuntu/Agile_Data_Code_2/jupyter_notebook_config.py /home/ubuntu/.jupyter/
+# cd /home/ubuntu/Agile_Data_Code_2
+# jupyter-notebook --ip=0.0.0.0 &
+# cd

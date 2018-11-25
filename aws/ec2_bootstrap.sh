@@ -262,6 +262,12 @@ cd /home/ubuntu
 # Set the spark.jars path
 echo "spark.jars /home/ubuntu/Agile_Data_Code_2/lib/mongo-hadoop-spark-2.0.2.jar,/home/ubuntu/Agile_Data_Code_2/lib/mongo-java-driver-3.9.0.jar,/home/ubuntu/Agile_Data_Code_2/lib/mongo-hadoop-2.0.2.jar,/home/ubuntu/Agile_Data_Code_2/lib/elasticsearch-spark-20_2.11-6.4.3.jar,/home/ubuntu/Agile_Data_Code_2/lib/snappy-java-1.1.7.2.jar,/home/ubuntu/Agile_Data_Code_2/lib/lzo-hadoop-1.0.5.jar,/home/ubuntu/Agile_Data_Code_2/lib/commons-httpclient-3.1.jar" | sudo tee -a /home/ubuntu/spark/conf/spark-defaults.conf
 
+# Move Hadoop binding for Spark to ~/hadoop/extra_bindings
+cd /home/ubuntu
+mkdir ./hadoop/extra_bindings
+mv home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-api-1.7.25.jar /home/ubuntu/hadoop/extra_bindings
+mv home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar /home/ubuntu/hadoop/extra_bindings
+
 #
 # Kafka install and setup
 #
@@ -319,7 +325,7 @@ sudo apt-get install -y ant
 
 # Install Cassandra - must build from source as the latest 3.11.1 build is broken...
 echo "" | tee -a $LOG_FILE
-echo "Installing Cassandra ..."
+echo "Installing Cassandra ..." | tee -a $LOG_FILE
 git clone https://github.com/apache/cassandra
 cd cassandra
 git checkout cassandra-3.11

@@ -1,6 +1,6 @@
 csv_lines = sc.textFile("data/example.csv")
 data = csv_lines.map(lambda line: line.split(","))
-schema_data = data.map(lambda x: ('key', {'name': x[0], 'company': x[1], 'title': x[2]}))
+schema_data = data.map(lambda x: ('ignored_key', {'name': x[0], 'company': x[1], 'title': x[2]}))
 
 schema_data.saveAsNewAPIHadoopFile(
   path='-', 

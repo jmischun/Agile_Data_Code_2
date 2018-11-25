@@ -273,10 +273,10 @@ sudo mv home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar /hom
 #
 echo "" | tee -a $LOG_FILE
 echo "Downloading and installing Kafka version 1.0.0 for Spark 2.11 ..." | tee -a $LOG_FILE
-curl -Lko /tmp/kafka_2.1.0.tgz http://mirrors.sorengard.com/apache/kafka/2.1.0/kafka-2.1.0-src.tgz
+curl -Lko /tmp/kafka_2.12-2.1.0.tgz http://mirror.cogentco.com/pub/apache/kafka/2.1.0/kafka_2.12-2.1.0.tgz
 mkdir -p /home/ubuntu/kafka
 cd /home/ubuntu/
-tar -xvzf /tmp/kafka_2.1.0.tgz -C kafka --strip-components=1 && rm -f /tmp/kafka_2.1.0.tgz
+tar -xvzf /tmp/kafka_2.12-2.1.0.tgz -C kafka --strip-components=1 && rm -f /tmp/kafka_2.12-2.1.0.tgz
 
 # Give to ubuntu
 echo "Giving Kafka to user ubuntu ..." | tee -a $LOG_FILE

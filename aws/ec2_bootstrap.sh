@@ -35,9 +35,7 @@ EOF
 sudo chmod 0755 /etc/update-motd.d/99-agile-data-science
 sudo update-motd
 
-#
 # Install Java
-#
 echo "Installing and configuring OpenJKD 8 ..." | tee -a $LOG_FILE
 sudo add-apt-repository -y ppa:openjdk-r/ppa
 sudo apt-get update
@@ -46,9 +44,7 @@ echo '# Java environment setup' | sudo tee -a /home/ubuntu/.bash_profile
 echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" | sudo tee -a /home/ubuntu/.bash_profile
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
-#
 # Install Miniconda
-#
 echo "Installing and configuring miniconda3 latest ..." | tee -a $LOG_FILE
 curl -Lko /tmp/Miniconda3-latest-Linux-x86_64.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 chmod +x /tmp/Miniconda3-latest-Linux-x86_64.sh
@@ -62,9 +58,8 @@ echo 'export PATH=/home/ubuntu/anaconda/bin:$PATH' | sudo tee -a /home/ubuntu/.b
 sudo chown -R ubuntu /home/ubuntu/anaconda
 sudo chgrp -R ubuntu /home/ubuntu/anaconda
 
-#
+
 # Install Clone repo, install Python dependencies
-#
 echo "Cloning https://github.com/rjurney/Agile_Data_Code_2 repository and installing dependencies ..." \
   | tee -a $LOG_FILE
 cd /home/ubuntu
@@ -86,9 +81,7 @@ cd /home/ubuntu
 # Install commons-httpclient
 curl -Lko /home/ubuntu/Agile_Data_Code_2/lib/commons-httpclient-3.1.jar http://central.maven.org/maven2/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar
 
-#
 # Install Hadoop
-#
 echo "" | tee -a $LOG_FILE
 echo "Downloading and installing Hadoop 3.1.1 ..." | tee -a $LOG_FILE
 curl -Lko /tmp/hadoop-3.1.1.tar.gz https://archive.apache.org/dist/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz
@@ -117,9 +110,7 @@ echo "Giving hadoop to user ubuntu ..." | tee -a $LOG_FILE
 sudo chown -R ubuntu /home/ubuntu/hadoop
 sudo chgrp -R ubuntu /home/ubuntu/hadoop
 
-#
 # Install Spark
-#
 echo "" | tee -a $LOG_FILE
 echo "Downloading and installing Spark 2.3.2 ..." | tee -a $LOG_FILE
 curl -Lko /tmp/spark-2.3.2-bin-hadoop2.7.tgz http://apache.cs.utah.edu/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz
@@ -156,9 +147,7 @@ echo "Giving spark to user ubuntu ..." | tee -a $LOG_FILE
 sudo chown -R ubuntu /home/ubuntu/spark
 sudo chgrp -R ubuntu /home/ubuntu/spark
 
-#
 # Install MongoDB and dependencies
-#
 echo "" | tee -a $LOG_FILE
 echo "Installing MongoDB via apt-get ..." | tee -a $LOG_FILE
 sudo apt-get install -y mongodb
@@ -205,9 +194,7 @@ cd /home/ubuntu
 # echo "Nuking the source to mongo-hadoop ..." | tee -a $LOG_FILE
 # rm -rf /home/ubuntu/mongo-hadoop
 
-#
 # Install ElasticSearch in the elasticsearch directory in the root of our project, and the Elasticsearch for Hadoop package
-#
 echo "curl -sLko /tmp/elasticsearch-6.4.3.tar.gz https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.3.tar.gz"
 curl -sLko /tmp/elasticsearch-6.4.3.tar.gz https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.3.tar.gz
 mkdir /home/ubuntu/elasticsearch
@@ -261,9 +248,7 @@ mkdir ./hadoop/extra_bindings
 sudo mv /home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-api-1.7.25.jar /home/ubuntu/hadoop/extra_bindings
 sudo mv /home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar /home/ubuntu/hadoop/extra_bindings
 
-#
 # Kafka install and setup
-#
 echo "" | tee -a $LOG_FILE
 echo "Downloading and installing Kafka version 1.0.0 for Spark 2.11 ..." | tee -a $LOG_FILE
 curl -Lko /tmp/kafka_2.12-2.1.0.tgz http://mirror.cogentco.com/pub/apache/kafka/2.1.0/kafka_2.12-2.1.0.tgz
@@ -285,35 +270,6 @@ echo "Running Zookeeper as a daemon ..." | tee -a $LOG_FILE
 sudo -H -u ubuntu /home/ubuntu/kafka/bin/zookeeper-server-start.sh -daemon /home/ubuntu/kafka/config/zookeeper.properties
 echo "Running Kafka Server as a daemon ..." | tee -a $LOG_FILE
 sudo -H -u ubuntu /home/ubuntu/kafka/bin/kafka-server-start.sh -daemon /home/ubuntu/kafka/config/server.properties
-
-#
-# Install and setup Airflow
-#
-echo "" | tee -a $LOG_FILE
-echo "Installing Airflow via pip ..." | tee -a $LOG_FILE
-pip install --user apache-airflow[hive]
-mkdir /home/ubuntu/airflow
-mkdir /home/ubuntu/airflow/dags
-mkdir /home/ubuntu/airflow/logs
-mkdir /home/ubuntu/airflow/plugins
-
-echo "Giving airflow directory to user ubuntu and adding airflow to path..." | tee -a $LOG_FILE
-sudo chown -R ubuntu /home/ubuntu/airflow
-sudo chgrp -R ubuntu /home/ubuntu/airflow
-export PATH=$PATH:/home/ubuntu/.local/bin/
-echo 'export PATH=$PATH:/home/ubuntu/.local/bin/' | sudo tee -a /home/ubuntu/.bash_profile
-
-airflow initdb
-airflow webserver -D &
-airflow scheduler -D &
-
-echo "Giving airflow directory to user ubuntu yet again ..." | tee -a $LOG_FILE
-sudo chown -R ubuntu /home/ubuntu/airflow
-sudo chgrp -R ubuntu /home/ubuntu/airflow
-
-echo "Adding chown airflow commands to /home/ubuntu/.bash_profile ..." | tee -a $LOG_FILE
-echo "sudo chown -R ubuntu /home/ubuntu/airflow" | sudo tee -a /home/ubuntu/.bash_profile
-echo "sudo chgrp -R ubuntu /home/ubuntu/airflow" | sudo tee -a /home/ubuntu/.bash_profile
 
 # Install Ant to build Cassandra
 sudo apt-get install -y ant
@@ -345,9 +301,7 @@ rm /tmp/janusgraph-0.2.0-hadoop2.zip
 sudo chgrp ubuntu ~/.bash_profile
 sudo chown ubuntu ~/.bash_profile
 
-#
 # Cleanup
-#
 echo "Cleaning up after our selves ..." | tee -a $LOG_FILE
 sudo apt-get clean
 sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -305,3 +305,5 @@ sudo chown ubuntu ~/.bash_profile
 echo "Cleaning up after our selves ..." | tee -a $LOG_FILE
 sudo apt-get clean
 sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+cd /home/ubuntu
+source .bash_profile

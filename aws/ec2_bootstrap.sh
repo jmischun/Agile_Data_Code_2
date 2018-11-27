@@ -76,14 +76,11 @@ echo '# Agile DS Project Home setup' | sudo tee -a /home/ubuntu/.bash_profile
 echo "export PROJECT_HOME=/home/ubuntu/Agile_Data_Code_2" | sudo tee -a /home/ubuntu/.bash_profile
 conda install -y python=3.5
 conda install -y iso8601 numpy scipy scikit-learn matplotlib ipython jupyter
-# pip install --upgrade pip
-pip install py4j
+pip install --upgrade pip
+pip install py4j kafka findspark
 pip install -r requirements.txt
-# receiving 'Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-install-nytfwkw8/airflow/' from line above
-# possible solution: run after airflow is installed
 sudo chown -R ubuntu /home/ubuntu/Agile_Data_Code_2
 sudo chgrp -R ubuntu /home/ubuntu/Agile_Data_Code_2
-pip install py4j
 cd /home/ubuntu
 
 # Install commons-httpclient
@@ -247,10 +244,6 @@ sudo chown -R ubuntu /home/ubuntu/elasticsearch-hadoop
 # Install Elasticsearch Python Package
 pip install pyelasticsearch
 
-#
-# Spark jar setup
-#
-
 # Install and add snappy-java and lzo-java to our classpath below via spark.jars
 echo "" | tee -a $LOG_FILE
 echo "Installing snappy-java and lzo-java and adding them to our classpath ..." | tee -a $LOG_FILE
@@ -265,8 +258,8 @@ echo "spark.jars /home/ubuntu/Agile_Data_Code_2/lib/mongo-hadoop-spark-2.0.2.jar
 # Move Hadoop binding for Spark to ~/hadoop/extra_bindings
 cd /home/ubuntu
 mkdir ./hadoop/extra_bindings
-sudo mv home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-api-1.7.25.jar /home/ubuntu/hadoop/extra_bindings
-sudo mv home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar /home/ubuntu/hadoop/extra_bindings
+sudo mv /home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-api-1.7.25.jar /home/ubuntu/hadoop/extra_bindings
+sudo mv /home/ubuntu/hadoop/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar /home/ubuntu/hadoop/extra_bindings
 
 #
 # Kafka install and setup
@@ -298,15 +291,17 @@ sudo -H -u ubuntu /home/ubuntu/kafka/bin/kafka-server-start.sh -daemon /home/ubu
 #
 echo "" | tee -a $LOG_FILE
 echo "Installing Airflow via pip ..." | tee -a $LOG_FILE
-SLUGIFY_USES_TEXT_UNIDECODE=yes pip install --user apache-airflow[hive]
+pip install --user apache-airflow[hive]
 mkdir /home/ubuntu/airflow
 mkdir /home/ubuntu/airflow/dags
 mkdir /home/ubuntu/airflow/logs
 mkdir /home/ubuntu/airflow/plugins
 
-echo "Giving airflow directory to user ubuntu ..." | tee -a $LOG_FILE
+echo "Giving airflow directory to user ubuntu and adding airflow to path..." | tee -a $LOG_FILE
 sudo chown -R ubuntu /home/ubuntu/airflow
 sudo chgrp -R ubuntu /home/ubuntu/airflow
+export PATH=$PATH:/home/ubuntu/.local/bin/
+echo 'export PATH=$PATH:/home/ubuntu/.local/bin/' | sudo tee -a /home/ubuntu/.bash_profile
 
 airflow initdb
 airflow webserver -D &

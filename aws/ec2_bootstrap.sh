@@ -72,7 +72,7 @@ echo "export PROJECT_HOME=/home/ubuntu/Agile_Data_Code_2" | sudo tee -a /home/ub
 conda install -y python=3.5
 conda install -y iso8601 numpy scipy scikit-learn matplotlib ipython jupyter
 pip install --upgrade pip
-pip install py4j kafka findspark
+pip install py4j kafka findspark config
 pip install -r requirements.txt
 sudo chown -R ubuntu /home/ubuntu/Agile_Data_Code_2
 sudo chgrp -R ubuntu /home/ubuntu/Agile_Data_Code_2
